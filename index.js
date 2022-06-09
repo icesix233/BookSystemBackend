@@ -69,6 +69,17 @@ app.get("/api/user/get", (req,res) => {
     })
 })
 
+app.post("/api/user/add", (req, res) => {
+    const userName = req.body.userName;
+    const userPassword = req.body.userPassword;
+    const isManager = req.body.isManager;
+
+    const sqlInsert = "INSERT INTO users (userName, userPassword, isManager) VALUES (?,?,?)";
+    db.query(sqlInsert, [userName, userPassword, isManager], (err, result) => {
+        console.log(result);
+    })
+})
+
 app.listen(3022, () => {
     console.log("running on port 3022");
 })
