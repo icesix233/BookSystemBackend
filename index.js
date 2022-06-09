@@ -15,6 +15,8 @@ app.use(express.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({extended:true}));
 
+/* Book Table API */
+
 app.get("/api/book/get", (req,res) => {
     const sqlSelect = "SELECT * FROM books;";
     db.query(sqlSelect, (err, result) => {
@@ -56,6 +58,14 @@ app.post("/api/book/delete", (req, res) => {
     const sqlDelete = "DELETE FROM books WHERE bookName = ?";
     db.query(sqlDelete, [bookName], (err, result) => {
         console.log(result);
+    })
+})
+
+/* User Table API */
+app.get("/api/user/get", (req,res) => {
+    const sqlSelect = "SELECT * FROM users;";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
     })
 })
 
