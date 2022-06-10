@@ -80,6 +80,26 @@ app.post("/api/user/add", (req, res) => {
     })
 })
 
+app.post("/api/user/delete", (req, res) => {
+    const userName = req.body.userName;
+
+    const sqlDelete = "DELETE FROM users WHERE userName = ?";
+    db.query(sqlDelete, [userName], (err, result) => {
+        console.log(result);
+    })
+})
+
+app.post("/api/user/update", (req, res) => {
+    const userName = req.body.userName;
+    const userPassword = req.body.userPassword;
+    const isManager = req.body.isManager;
+
+    const sqlUpdate = "UPDATE users SET userPassword = ?, isManager = ? WHERE userName = ?;";
+    db.query(sqlUpdate, [userPassword, isManager, userName], (err, result) => {
+        console.log(err);
+    })
+})
+
 app.listen(3022, () => {
     console.log("running on port 3022");
 })
