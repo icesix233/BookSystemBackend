@@ -145,6 +145,17 @@ app.post("/api/rent/add", (req, res) => {
     })
 })
 
+app.post("/api/rent/update", (req, res) => {
+    const bookName = req.body.bookName;
+    const endTime = req.body.endTime;
+    const status = req.body.status;
+
+    const sqlUpdate = "UPDATE bookrent SET endTime = ?, status = ? WHERE bookName = ?;";
+    db.query(sqlUpdate, [endTime, status, bookName], (err, result) => {
+        console.log(err);
+    })
+})
+
 app.get("/api/rent/get", (req,res) => {
     const sqlSelect = "SELECT * FROM bookrent;";
     db.query(sqlSelect, (err, result) => {
