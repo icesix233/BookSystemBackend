@@ -100,6 +100,58 @@ app.post("/api/user/update", (req, res) => {
     })
 })
 
+/* Book Sale Table API */
+app.post("/api/sale/add", (req, res) => {
+    const bookID = req.body.bookID;
+    const userID = req.body.userID;
+    const price = req.body.price;
+    const time = req.body.time;
+    const bookName = req.body.bookName;
+
+    const sqlInsert = "INSERT INTO booksale (bookID, bookName, userID, price, time) VALUES (?,?,?,?,?)";
+    db.query(sqlInsert, [bookID, bookName, userID, price, time], (err, result) => {
+        console.log(result);
+    })
+})
+
+app.get("/api/sale/get", (req,res) => {
+    const sqlSelect = "SELECT * FROM booksale;";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+    })
+})
+
+// 获取销售额
+app.get("/api/sale/getTotal", (req,res) => {
+    const sqlSelect = "select sum(price) from booksale where id > 0;";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+    })
+})
+
+/* Book Rent Table API */
+app.post("/api/rent/add", (req, res) => {
+    const bookID = req.body.bookID;
+    const bookName = req.body.bookName;
+    const userID = req.body.userID;
+    const price = req.body.price;
+    const status = 2;
+    const startTime = req.body.startTime;
+    const endTime = req.body.endTime;
+
+    const sqlInsert = "INSERT INTO bookrent (bookID, bookName, userID, startTime, endTime, price, status) VALUES (?,?,?,?,?,?,?)";
+    db.query(sqlInsert, [bookID, bookName, userID, startTime, endTime,price,status], (err, result) => {
+        console.log(err);
+    })
+})
+
+app.get("/api/rent/get", (req,res) => {
+    const sqlSelect = "SELECT * FROM bookrent;";
+    db.query(sqlSelect, (err, result) => {
+        res.send(result);
+    })
+})
+
 app.listen(3022, () => {
     console.log("running on port 3022");
 })
